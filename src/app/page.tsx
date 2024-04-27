@@ -82,19 +82,6 @@ export default function Chat() {
         ))}
       </div>
 
-      <form onSubmit={handleFileSubmit} className="mb-4 p-4 bg-white rounded-lg shadow">
-        <label htmlFor="csvFile" className="block mb-2 text-sm font-bold text-gray-700">
-          Upload CSV File:
-        </label>
-        <input 
-          id="csvFile"
-          type="file" 
-          accept=".csv" 
-          onChange={handleFileChange} 
-          className="block w-full p-2 mb-2 border border-gray-300 rounded text-gray-700 cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-700"
-        />
-      </form>
-
       <form onSubmit={handleSubmit} className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-lg w-full rounded-t-lg">
         <label className="block mb-2 text-sm font-bold text-gray-700">
           Enter your coordinates:
