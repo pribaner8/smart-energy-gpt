@@ -9,7 +9,7 @@ type Message = {
 };
 
 const openai = new OpenAI({
-  apiKey: "",
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 // validate latitude and longitude
@@ -50,7 +50,6 @@ export default async function handler(
       climateData.daily.windspeed_10m_max.reduce((sum: number, speed: number) => sum + speed, 0) /
       climateData.daily.windspeed_10m_max.length;
   
-
       const prompt = `Given the coordinates latitude: ${latitude} and longitude: ${longitude}, the average temperature over the last 30 years is ${avgTemperature.toFixed(
         2
       )}°C, the average precipitation is ${yearlyPrecipitation.toFixed(
@@ -58,19 +57,20 @@ export default async function handler(
       )}mm per year, and the average maximum wind speed is ${avgWindSpeed.toFixed(
         2
       )}m/s. Provide smart energy recommendations based on this climate data.`;
-    
+      
       console.log(prompt);
-
+      
       const response = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [
           {
             role: "system",
-            content:
-              "I am your expert assistant for smart energy choices based on geographical location. I provide tailored recommendations for renewable energy solutions and energy efficiency strategies suited to your specific coordinates. Focus on estimations for solar and wind power generation. Any renewable is fine.",
+            content: "I am programmed to provide tailored recommendations for renewable energy solutions and energy efficiency strategies suited to specific coordinates. Focus on solar, wind, and other renewable energy estimations, excluding any unrelated content."
           },
           { role: "user", content: prompt },
         ],
+        temperature: 0.1,
+        max_tokens: 150
       });
 
       // Send back the AI's response text
