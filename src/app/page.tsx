@@ -52,57 +52,41 @@ export default function Chat() {
       alert('Error fetching energy recommendations. Please try again.');
     }
   };
-
-  const handleFileSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (file) {
-      const formData = new FormData();
-      formData.append('file', file);
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-      const result = await response.json();
-      if (result.success) {
-        alert('File uploaded successfully.');
-      } else {
-        alert('Failed to upload file.');
-      }
-    }
-  };
-
   return (
-    <div className="flex flex-col w-full h-full min-h-screen py-24 mx-auto bg-gray-100 text-black">
-      <div className="overflow-y-auto h-96 mb-4 shadow-lg rounded-lg">
+    <div className="flex flex-col w-full h-full min-h-screen mx-auto bg-slate-200 text-gray-900">
+      <div className="flex justify-center items-center bg-gray-900 text-white py-4">
+        <h1 className="text-3xl font-bold">Smart Energy</h1>
+      </div>
+      <div className="overflow-y-auto h-[calc(100vh-200px)] mb-4 shadow-xl rounded-xl">
         {chatMessages.map(m => (
-          <div key={m.id} className={`whitespace-pre-wrap p-4 rounded-lg m-2 ${m.role === 'user' ? 'text-left bg-blue-100' : 'text-right bg-green-100'}`}>
+          <div key={m.id} className={`whitespace-pre-wrap p-4 rounded-xl m-2 ${m.role === 'user' ? 'bg-indigo-200' : 'bg-teal-200'}`}>
             <strong>{m.role === 'user' ? 'User: ' : m.role === 'assistant' ? 'Smart Energy Assistant: ' : 'Assistant: '}</strong>
-            <ReactMarkdown className="text-gray-800">{m.content}</ReactMarkdown>
+            <ReactMarkdown className="text-gray-900">{m.content}</ReactMarkdown>
           </div>
         ))}
       </div>
 
-      <form onSubmit={handleSubmit} className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-lg w-full rounded-t-lg">
-        <label className="block mb-2 text-sm font-bold text-gray-700">
+      <form onSubmit={handleSubmit} className="fixed bottom-0 left-0 right-0 bg-gray-50 p-4 shadow-xl w-full rounded-t-xl">
+        <label className="block mb-2 text-sm font-bold text-gray-800">
           Enter your coordinates:
           <div className="flex space-x-2">
             <input
               type="text"
               placeholder="Latitude"
-              className="w-1/2 p-2 mb-2 border border-gray-300 rounded text-gray-700"
+              className="w-1/2 p-2 mb-2 border border-gray-400 rounded text-gray-800"
               onChange={e => setLatitude(e.target.value)}
               value={latitude}
             />
             <input
               type="text"
               placeholder="Longitude"
-              className="w-1/2 p-2 mb-2 border border-gray-300 rounded text-gray-700"
+              className="w-1/2 p-2 mb-2 border border-gray-400 rounded text-gray-800"
               onChange={e => setLongitude(e.target.value)}
               value={longitude}
             />
           </div>
         </label>
-        <button type="submit" className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+        <button type="submit" className="w-full bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded">
           Get Energy Recommendations
         </button>
       </form>
