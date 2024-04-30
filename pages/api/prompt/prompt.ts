@@ -76,20 +76,18 @@ export default async function handler(
       const { avgTemperature, totalPrecipitation, avgWindSpeed } =
         await fetchClimateData(latitude, longitude);
 
-      const prompt = `Location: ${location}. The average temperature over the last 30 years is ${avgTemperature}°C, the total annual precipitation is ${totalPrecipitation}mm, and the average maximum wind speed is ${avgWindSpeed}m/s. Based on this climate data, provide smart energy recommendations tailored to this region. Please list the location first, if unkown don't say anything.`;
-      console.log(prompt);
+        const prompt = `With an average temperature of ${avgTemperature}°C, and average peak wind speed of ${avgWindSpeed}m/s in ${location}, provide a forecast for potential solar and wind energy generation. Assess the viability of these energy sources considering the climate data, geographical features, and local energy demand. Include estimated energy outputs and discuss any seasonal variations that might affect production.`;
+        console.log(prompt);
 
       const response = await openai.chat.completions.create({
-        model: "gpt-4-turbo-preview",
+        model: "gpt-4-turbo-2024-04-09",
         messages: [
           {
             role: "system",
-            content:
-              "I am programmed to provide tailored recommendations for renewable energy solutions and energy efficiency strategies suited to specific geographical and climatic conditions. Focus on solar, wind, and other renewable energy estimations, considering local factors and excluding any unrelated content.",            content: "Analyze the feasibility of solar versus wind energy in this region based on the climate data provided. Discuss the cost implications, potential energy yields, and any challenges."
-          },
+            content: "Provide a concise analysis and prediction. Focus on the most critical information and key numerical estimates relevant to solar and wind energy potential in the specified location."          },
           { role: "user", content: prompt },
         ],
-        temperature: 0.1,
+        temperature: 0.2,
         max_tokens: 500,
       });
 
