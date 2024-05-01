@@ -76,7 +76,7 @@ export default async function handler(
       const { avgTemperature, totalPrecipitation, avgWindSpeed } =
         await fetchClimateData(latitude, longitude);
 
-        const prompt = `With an average temperature of ${avgTemperature}°C, and average peak wind speed of ${avgWindSpeed}m/s in ${location}, provide a forecast for potential solar and wind energy generation. Assess the viability of these energy sources considering the climate data, geographical features, and local energy demand. Include estimated energy outputs and discuss any seasonal variations that might affect production.`;
+        const prompt = `With an average temperature of ${avgTemperature}°C, and average peak  wind speed of ${avgWindSpeed}m/s in ${location}, provide a forecast for potential solar and wind energy generation. Assess the viability of these energy sources considering the climate data, geographical features, and local energy demand. Include estimated energy outputs and discuss any seasonal variations that might affect production.`;
         console.log(prompt);
 
       const response = await openai.chat.completions.create({
