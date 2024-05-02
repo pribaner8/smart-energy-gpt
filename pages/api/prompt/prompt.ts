@@ -84,14 +84,17 @@ export default async function handler(
         messages: [
           {
             role: "system",
-            content: "Provide a concise analysis and prediction. Focus on the most critical information and key numerical estimates relevant to solar and wind energy potential in the specified location."          },
+            content: "Provide a detailed analysis of solar and wind energy potential, including climate and geographic considerations, estimated energy outputs, and seasonal variations. Use clear headings, bullet points, and numerical examples to structure your response."
+          },
           { role: "user", content: prompt },
         ],
         temperature: 0.2,
-        max_tokens: 500,
+        max_tokens: 1000,
       });
+      const modifiedContent = response.choices[0].message.content?.replace(/\\times/g, '*');
 
-      res.status(200).json({ response: response.choices[0].message.content });
+      res.status(200).json({ response: modifiedContent });
+
     } catch (error) {
       console.error("Error in processing the request:", error);
       res.status(500).json({ error: "Failed to process the request" });
